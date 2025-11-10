@@ -36,17 +36,18 @@ jobs:
             echo "ERROR: VITE_SUPABASE_ANON_KEY secret not set!"
             exit 1
           fi
-          echo "Secrets are configured correctly"
+                - name: Setup Pages
+        uses: actions/configure-pages@v4
 
-      - name: Build web app
-        run: npm run build
-
-      - name: Sync Capacitor
-        run: npx cap sync android
-
-      - name: Setup Java
-        uses: actions/setup-java@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
+          path: './dist'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
           distribution: 'temurin'
           java-version: '17'
                 - name: Make gradlew executable
